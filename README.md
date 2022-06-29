@@ -1,6 +1,9 @@
 # Effect of libjpeg version on CSM
 
+This is the code repository for the paper The Effect of the JPEG Implementation on the Cover-Source Mismatch Error in Image Steganalysis [1]. It contains the codebase to replicate the experiment when mismatch in libjpeg version causes CSM.
 ## Setup
+
+Codebase uses Python and Matlab.
 
 ### Python
 
@@ -12,12 +15,16 @@ pip3 install jpeglib==0.10.11 pillow==9.0.0 numpy==1.19.5
 
 ### Matlab
 
+Matlab is executed locally in a Matlab environment.
+
 You need Matlab JPEG Toolbox by Phil Sallee. Prebuilt versions have been [published](https://digitnet.github.io/jpeg-toolbox/), or you can build it from source. In that case, you need include and link libjpeg.
 
 ```matlab
 mex -I/usr/local/include -I./include/jpegtbx include/jpegtbx/jpeg_read.c -L/usr/local/lib -ljpeg -v
 mex -I/usr/local/include -I./include/jpegtbx include/jpegtbx/jpeg_write.c -L/usr/local/lib -ljpeg -v
 ```
+
+In Matlab, you need to add `alice/`, `eve/` and `include` directories to path.
 
 
 ## Usage
@@ -98,3 +105,20 @@ Execute the Matlab code from `eve/train_model.m` to train the model and export i
 ### Eve: Model evaluation
 
 Execute the Matlab code from `eve/evaluate_model.m` to evaluate the model and print out the performance.
+
+## Repository structure
+
+The repository has following structure.
+
+- `alice` = codebase for Alice
+- `eve` = codebase for Eve
+- `include` = shared codebase
+- `data` = script for downloading data, destination for generated images
+- `model` = trained models
+
+
+## Reference
+
+[2] M. Benes, N. Hofer, and R. Böhme. 2022. The Effect of the JPEG Implementation on the Cover-Source Mismatch Error in Image Steganalysis. In EUSIPCO. IEEE, ?-?.
+
+[2] M. Benes, N. Hofer, and R. Böhme. 2022. Know Your Library: How the libjpeg Version Influences Compression and Decompression Results. In IH&MMSec. ACM, ?-?.

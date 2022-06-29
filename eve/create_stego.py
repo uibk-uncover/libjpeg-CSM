@@ -65,4 +65,4 @@ if __name__ == '__main__':
     # compress
     compress_stego(dst_dir, '6b', .4)
     compress_stego(dst_dir, '7', .4)
-    compare_pairs(alaska_path, '6b', .4)
+    #compare_pairs(dst_dir, '6b', .4)
