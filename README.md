@@ -1,4 +1,4 @@
-# libjpeg effect on CSM
+# Effect of libjpeg version on CSM
 
 ## Setup
 

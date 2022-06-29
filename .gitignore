@@ -10,6 +10,7 @@ __pycache__/
 *.prj
 resources/
 *.mat
+*.asv
 
 # Apple
 .DS_Store
