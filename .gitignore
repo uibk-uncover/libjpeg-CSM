@@ -1,0 +1,15 @@
+
+# dataset
+data/ALASKA_v2_TIFF_256_COLOR
+data/ALASKA_6b
+data/ALASKA_7
+
+# Python
+__pycache__/
+# Matlab
+*.prj
+resources/
+*.mat
+
+# Apple
+.DS_Store
