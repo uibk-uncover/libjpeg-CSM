@@ -121,6 +121,6 @@ The repository has following structure.
 
 ## Reference
 
-[2] M. Benes, N. Hofer, and R. Böhme. 2022. The Effect of the JPEG Implementation on the Cover-Source Mismatch Error in Image Steganalysis. In EUSIPCO. IEEE, ?-?.
+[1] Beneš, M., Hofer, N., and Böhme, R. The Effect of the JPEG Implementation on the Cover-Source Mismatch Error in Image Steganalysis. In Proceedings of the 30th European Signal Processing Conference (EUSIPCO). EURASIP, Belgrade, Serbia, 2022. [[PDF]](https://informationsecurity.uibk.ac.at/pdfs/BHB2022_EUSIPCO.pdf) [[Video]](https://www.youtube.com/watch?v=dZ7bDWldgiE)
 
-[2] M. Benes, N. Hofer, and R. Böhme. 2022. Know Your Library: How the libjpeg Version Influences Compression and Decompression Results. In IH&MMSec. ACM, ?-?.
+[2] Beneš, M., Hofer, N., and Böhme, R. Know Your Library: How the libjpeg Version Influences Compression and Decompression Results. In Proceedings of the 10th ACM Workshop on Information Hiding and Multimedia Security (IH&MMSEC). ACM, 2022, pp. 19–25. [[PDF]](https://informationsecurity.uibk.ac.at/pdfs/BHB2022_IHMMSEC.pdf) [[Publisher]](https://dl.acm.org/doi/10.1145/3531536.3532962)
