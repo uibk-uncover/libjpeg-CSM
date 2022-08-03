@@ -1,6 +1,6 @@
 # Effect of libjpeg version on CSM
 
-This is the code repository for the paper The Effect of the JPEG Implementation on the Cover-Source Mismatch Error in Image Steganalysis [1]. It contains the codebase to replicate the CSM caused by a mismatch in libjpeg versions.
+This is the code repository for the paper The Effect of the JPEG Implementation on the Cover-Source Mismatch Error in Image Steganalysis [1]. It contains the codebase to replicate the CSM caused by a mismatch in libjpeg versions, which was described in our previous paper [2].
 ## Setup
 
 This codebase uses Python and Matlab.
@@ -30,11 +30,11 @@ In Matlab, you need to add `alice/`, `eve/` and `include` directories to path.
 ## Usage
 
 We use the Python package `jpeglib` that allows the selection of the libjpeg version for compression and decompression.
-However, for J-UNIWARD embedding, JSRM feature extraction and EFLD model training and evaluation we use the implementation of DDE/Jessica Fridrich.
+However, for J-UNIWARD embedding, JSRM feature extraction and EFLD model training and evaluation we use the implementation of DDE/Jessica Fridrich [3].
 
 ### Alice: Downloading data
 
-As pre-compressed covers $x_{\text{src}}$ we use the ALASKA2 dataset. As it has around 16GB, you will have to download it directly from the original repository of the [ALASKA2 steganalysis challenge](https://alaska.utt.fr/).
+As pre-compressed covers $x_{\text{src}}$ we use the ALASKA2 dataset [4]. As it has around 16GB, you will have to download it directly from the original repository of the [ALASKA2 steganalysis challenge](https://alaska.utt.fr/).
 
 Downloading can be done by
 
@@ -80,7 +80,7 @@ The compressed and decompressed images are stored in `data/ALASKA_*/cover_compre
 
 ### Eve: Feature extraction
 
-Execute the Matlab code from `eve/extract_jsrm.m` to extract JSRM features from the input files. 
+Execute the Matlab code from `eve/extract_jsrm.m` to extract JSRM features from the input files.
 
 This will output the following MAT files in `data/` for cover and stego objects.
 
@@ -124,3 +124,7 @@ The repository has the following structure.
 [1] Beneš, M., Hofer, N., and Böhme, R. The Effect of the JPEG Implementation on the Cover-Source Mismatch Error in Image Steganalysis. In Proceedings of the 30th European Signal Processing Conference (EUSIPCO). EURASIP, Belgrade, Serbia, 2022. [[PDF]](https://informationsecurity.uibk.ac.at/pdfs/BHB2022_EUSIPCO.pdf) [[Video]](https://www.youtube.com/watch?v=dZ7bDWldgiE)
 
 [2] Beneš, M., Hofer, N., and Böhme, R. Know Your Library: How the libjpeg Version Influences Compression and Decompression Results. In Proceedings of the 10th ACM Workshop on Information Hiding and Multimedia Security (IH&MMSEC). ACM, 2022, pp. 19–25. [[PDF]](https://informationsecurity.uibk.ac.at/pdfs/BHB2022_IHMMSEC.pdf) [[Publisher]](https://dl.acm.org/doi/10.1145/3531536.3532962)
+
+[3] Digital Data Embedding Laboratory. Department of Electrical and Computer Engineering. Binghamton University. [[URL]](http://dde.binghamton.edu/download/)
+
+[4] Cogranne, R., Giboulot, Q., and Bas, P. The ALASKA Steganalysis Challenge: A First Step Towards Steganalysis “Into The Wild. In Proceedings of the ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec). ACM, 2019, pp. 125-137. [[PDF]](https://hal.archives-ouvertes.fr/hal-02147763/document) [[Publisher]](https://doi.org/10.1145/3335203.3335726)
