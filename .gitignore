@@ -9,7 +9,8 @@ __pycache__/
 # Matlab
 *.prj
 resources/
-*.mat
+data/*.mat
+
 *.asv
 
 # Apple

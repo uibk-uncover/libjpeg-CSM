@@ -80,7 +80,9 @@ The compressed and decompressed images are stored in `data/ALASKA_*/cover_compre
 
 ### Eve: Feature extraction
 
-Execute the Matlab code from `eve/extract_jsrm.m` to extract JSRM features from input files. The output are following MAT files in `data/` directory for cover and stego objects.
+Execute the Matlab code from `eve/extract_jsrm.m` to extract JSRM features from input files. You might need to add `eve/` to the project paths in Matlab IDE.
+
+The output are following MAT files in `data/` directory for cover and stego objects.
 
 - `data/C_jsrm_6b_6b.mat`
 - `data/C_jsrm_7_7.mat`
@@ -95,7 +97,7 @@ These MAT files contain `C_jsrm` or `S_jsrm` object.
 
 ### Eve: Model training
 
-Execute the Matlab code from `eve/train_model.m` to train the model and export it to a directory `model/`.
+Execute the Matlab code from `eve/train_model.m` to train the model. Trained models are exported to a directory `model/`.
 
 - `model/model_6b_6b_0.4.mat`
 - `model/model_7_7_0.4.mat`
