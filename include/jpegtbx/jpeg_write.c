@@ -3,29 +3,29 @@
  *
  * JPEG_WRITE(JPEGOBJ,FILENAME)
  *
- * Reads JPEGOBJ, a Matlab struct containing the JPEG header, 
+ * Reads JPEGOBJ, a Matlab struct containing the JPEG header,
  * quantization tables and the DCT coefficients (as returned by JPEG_READ),
  * and writes the information into a JPEG file with the name FILENAME.
  *
  * This software is based in part on the work of the Independent JPEG Group.
- * In order to compile, you must first build IJG's JPEG Tools code library, 
+ * In order to compile, you must first build IJG's JPEG Tools code library,
  * available at ftp://ftp.uu.net/graphics/jpeg/jpegsrc.v6b.tar.gz.
  *
  * Phil Sallee, Surya De 6/2003
- * 
- * Copyright (c) 2003 The Regents of the University of California. 
- * All Rights Reserved. 
+ *
+ * Copyright (c) 2003 The Regents of the University of California.
+ * All Rights Reserved.
  *
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for educational, research and non-profit purposes,
  * without fee, and without a written agreement is hereby granted,
  * provided that the above copyright notice, this paragraph and the
  * following three paragraphs appear in all copies.
- * 
+ *
  * Permission to incorporate this software into commercial products may
  * be obtained by contacting the University of California.  Contact Jo Clare
  * Peterman, University of California, 428 Mrak Hall, Davis, CA, 95616.
- * 
+ *
  * This software program and documentation are copyrighted by The Regents
  * of the University of California. The software program and
  * documentation are supplied "as is", without any accompanying services
@@ -33,7 +33,7 @@
  * the program will be uninterrupted or error-free. The end-user
  * understands that the program was developed for research purposes and
  * is advised not to rely exclusively on the program for any reason.
- * 
+ *
  * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY
  * FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES,
  * INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND
@@ -57,9 +57,9 @@
 #include "mex.h"
 
 
-/* We need to create our own error handler so that we can override the 
+/* We need to create our own error handler so that we can override the
  * default handler in case a fatal error occurs.  The standard error_exit
- * method calls exit() which doesn't clean things up properly and also 
+ * method calls exit() which doesn't clean things up properly and also
  * exits Matlab.  This is described in the example.c routine provided in
  * the IJG's code library.
  */
@@ -91,14 +91,14 @@ METHODDEF(void)
 my_error_exit (j_common_ptr cinfo)
 {
   char buffer[JMSG_LENGTH_MAX];
-  
+
   /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
   my_error_ptr myerr = (my_error_ptr) cinfo->err;
 
   /* create the message */
   (*cinfo->err->format_message) (cinfo, buffer);
   printf("Error: %s\n",buffer);
-  
+
   /* return control to the setjmp point */
   longjmp(myerr->setjmp_buffer, 1);
 }
@@ -119,7 +119,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
   jpeg_component_info *compptr;
   JDIMENSION blk_x,blk_y;
   JBLOCKARRAY buffer;
-  JCOEFPTR bufptr;  
+  JCOEFPTR bufptr;
   double *mp, *mptop;
 
   /* check the input values */
@@ -161,13 +161,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
   jpeg_stdio_dest(&cinfo, outfile);
 
   /* Set the compression object with our parameters */
-  cinfo.image_width = 
+  cinfo.image_width =
     (unsigned int) mxGetScalar(mxGetField(mxjpeg_obj,0,"image_width"));
-  cinfo.image_height = 
+  cinfo.image_height =
     (unsigned int) mxGetScalar(mxGetField(mxjpeg_obj,0,"image_height"));
-  cinfo.input_components = 
+  cinfo.input_components =
     (int) mxGetScalar(mxGetField(mxjpeg_obj,0,"image_components"));
-  cinfo.in_color_space = 
+  cinfo.in_color_space =
     (int) mxGetScalar(mxGetField(mxjpeg_obj,0,"image_color_space"));
 
   /* set the compression object with default parameters */
@@ -195,7 +195,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     cinfo.comp_info[ci].component_id =
       (int) mxGetScalar(mxGetField(mxcomp_info,ci,"component_id"));
     cinfo.comp_info[ci].h_samp_factor =
-      (int) mxGetScalar(mxGetField(mxcomp_info,ci,"h_samp_factor")); 
+      (int) mxGetScalar(mxGetField(mxcomp_info,ci,"h_samp_factor"));
     cinfo.comp_info[ci].v_samp_factor =
       (int) mxGetScalar(mxGetField(mxcomp_info,ci,"v_samp_factor"));
     cinfo.comp_info[ci].quant_tbl_no =
@@ -208,19 +208,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
   /* request virtual block arrays */
-  mxcoef_arrays = mxGetField(mxjpeg_obj, 0, "coef_arrays");  
+  mxcoef_arrays = mxGetField(mxjpeg_obj, 0, "coef_arrays");
   coef_arrays = (jvirt_barray_ptr *)
     (cinfo.mem->alloc_small) ((j_common_ptr) &cinfo, JPOOL_IMAGE,
      sizeof(jvirt_barray_ptr) * cinfo.num_components);
   for (ci = 0; ci < cinfo.num_components; ci++)
   {
     compptr = cinfo.comp_info + ci;
-  
+
     c_height = mxGetM(mxGetCell(mxcoef_arrays,ci));
     c_width = mxGetN(mxGetCell(mxcoef_arrays,ci));
     compptr->height_in_blocks = c_height / DCTSIZE;
     compptr->width_in_blocks = c_width / DCTSIZE;
-  
+
     coef_arrays[ci] = (cinfo.mem->request_virt_barray)
       ((j_common_ptr) &cinfo, JPOOL_IMAGE, TRUE,
        (JDIMENSION) jround_up((long) compptr->width_in_blocks,
@@ -230,7 +230,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
        (JDIMENSION) compptr->v_samp_factor);
   }
 
-  
+  #if JPEG_LIB_VERSION >= 80
+  jpeg_calc_jpeg_dimensions(&cinfo);
+  #endif
+
   /* realize virtual block arrays */
   jpeg_write_coefficients(&cinfo,coef_arrays);
 
@@ -243,7 +246,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     mxtemp = mxGetCell(mxcoef_arrays,ci);
     mp = mxGetPr(mxtemp);
     mptop = mp;
-    
+
     c_height = mxGetM(mxtemp);
     c_width = mxGetN(mxtemp);
 
@@ -275,14 +278,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     /* Fill the table */
     mxtemp = mxGetCell(mxquant_tables,n);
     mp = mxGetPr(mxtemp);
-    for (i = 0; i < DCTSIZE; i++) 
+    for (i = 0; i < DCTSIZE; i++)
       for (j = 0; j < DCTSIZE; j++) {
         t = mp[j*DCTSIZE+i];
 
         if (t<1 || t>65535)
           mexErrMsgTxt("Quantization table entries not in range 1..65535");
 
-        cinfo.quant_tbl_ptrs[n]->quantval[i*DCTSIZE+j] = 
+        cinfo.quant_tbl_ptrs[n]->quantval[i*DCTSIZE+j] =
           (UINT16) t;
       }
   }
@@ -304,7 +307,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
           if (cinfo.ac_huff_tbl_ptrs[n] == NULL)
 	    cinfo.ac_huff_tbl_ptrs[n] =
             jpeg_alloc_huff_table((j_common_ptr) &cinfo);
-	  
+
           mxtemp = mxGetField(mxhuff_tables,n,"counts");
           mp = mxGetPr(mxtemp);
           for (i = 1; i <= 16; i++)
@@ -317,7 +320,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         for (; n < NUM_HUFF_TBLS; n++) cinfo.ac_huff_tbl_ptrs[n] = NULL;
       }
     }
-    
+
     if (mxGetField(mxjpeg_obj,0, "dc_huff_tables") != NULL)
     {
       mxhuff_tables = mxGetField(mxjpeg_obj,0,"dc_huff_tables");
@@ -342,7 +345,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
       }
     }
   }
- 
+
   /* copy markers */
   mxcomments =  mxGetField(mxjpeg_obj,0,"comments");
   n = mxGetN(mxcomments);
@@ -353,7 +356,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
      comment = mxCalloc(strlen, sizeof(char));
      mxGetString(mxtemp,comment,strlen);
      jpeg_write_marker(&cinfo, JPEG_COM, comment, strlen-1);
-     mxFree(comment);   
+     mxFree(comment);
   }
 
   /* done with cinfo */
